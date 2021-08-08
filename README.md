@@ -29,8 +29,8 @@ Le projet consiste à construire un réseau social interne pour les employés de
 
 
 
-*Specifications fonctionnelles: [ici](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Specs_FR_DWJ_VF.pdf)
-*Les logos officiel [ici](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Logos+(3).zip)
+* Specifications fonctionnelles: [ici](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Specs_FR_DWJ_VF.pdf)
+* Les logos officiel [ici](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P7/Groupomania_Logos+(3).zip)
 
 
 #### Objectifs et Compétences évaluées
