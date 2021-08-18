@@ -1,15 +1,17 @@
+//connexion a la bdd
+const dbconnect = require('../dbConnect.js');
+
+//requete sql
+const mysql = require('mysql');
+
 //securisation authentification avec un TOKEN genéré
 const jwt = require('jsonwebtoken');
 
 //hashage MDP
 const bcrypt = require('bcrypt');
 
-
-
 //maskage email
 const maskData = require('../node_modules/maskdata/index');
-
-
 
 /*-----------------------------------------SIGNUP--------------------------------------------*/
 // INSCRIPTION D'UN UTILISATEUR avec hashage MDP (BCRYPT) et maskage email(maskdata)
