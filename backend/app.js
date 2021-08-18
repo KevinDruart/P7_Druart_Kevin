@@ -22,7 +22,22 @@ const userRoutes = require('./routes/user');
 
 require('dotenv').config();
 
+const mysql = require('mysql2');
+
+const { Sequelize } = require('sequelize');
 //Connexion a la base de données
+const sequelize = new Sequelize("groupomania", "root", "root", {
+    dialect: "mysql",
+    host: "localhost"
+});
+
+try {
+    sequelize.authenticate();
+    console.log('Connecté à la base de données MySQL!');
+  } catch (error) {
+    console.error('Impossible de se connecter, erreur suivante :', error);
+  }
+ 
 
 
 const app = express();

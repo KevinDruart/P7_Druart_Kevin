@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const userCtrl = require('../controllers/user');
-const verifyPassword = require('../middleware/verifyPassword');
+
 const rateLimit = require("express-rate-limit");
 
 //limite de connexion
@@ -16,7 +16,7 @@ const createAccountLimiter = rateLimit({
   });
 
 // Endpoint crée un nouvel utilisateur
-router.post('/signup', verifyPassword, userCtrl.signup); 
+router.post('/signup', userCtrl.signup); 
 // Endpoint connexion d'un utilisateur
 router.post('/login', createAccountLimiter, userCtrl.login); 
 
