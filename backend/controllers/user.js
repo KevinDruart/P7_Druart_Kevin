@@ -1,5 +1,5 @@
 //connexion a la bdd
-const dbconnect = require('../dbConnect.js');
+const dbconnect = require('../connect/dbConnect.js');
 
 //requete sql
 const mysql = require('mysql');
@@ -32,13 +32,8 @@ exports.signup = (req, res, next) => {
         maskAtTheRate: false
       };
       // Création du nouvel utilisateur avec le modele user
-      const user = new User({
-        email: req.body.email,
-        //maskage de l'email
-        emailMasked: maskData.maskEmail2(req.body.email, emailMask2Options),
-        password: hash,
-      });
-      // On enregistre l'utilisateur dans la base de données
+      // On insere l'utilisateur dans la base de données
+     let signupSql= 'INSERT INTO user SET name=req.body.name, firstname=req.body.firstame, email=req.body.email, emailMasked= maskData.maskEmail2(req.body.email, emailMask2Options), password=hash'
       user
         //sauvegarde de l'utilisateur
         .save()
@@ -52,9 +47,8 @@ exports.signup = (req, res, next) => {
 /*-----------------------------------------LOGIN--------------------------------------------*/
 exports.login = (req, res, next) => {
   // On doit trouver l'utilisateur qui correspond à l'adresse entrée par l'utilisateur
-  User.findOne({
-    email: req.body.email
-  })
+  let loginSql = 'SELECT * FROM users WHERE email = ?';
+
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Adresse email et ou mot de passe incorrect !' });
