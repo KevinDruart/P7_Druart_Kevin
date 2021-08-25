@@ -9,7 +9,7 @@ let dbconnect = mysql.createConnection({
 });
 dbconnect.connect(function(err) { 
     if (err) throw err;
-    console.log('Connecté!')
+    console.log('Connecté à la base de données!')
 });
 
 module.exports = dbconnect;
