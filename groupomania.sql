@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Aug 18, 2021 at 03:07 PM
+-- Generation Time: Aug 25, 2021 at 10:16 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -31,7 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `comment` text NOT NULL
+  `comment` text NOT NULL,
+  `time_comment` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -44,7 +45,8 @@ CREATE TABLE `post` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
   `post` text NOT NULL,
-  `image` text NOT NULL
+  `image` text NOT NULL,
+  `time_post` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -55,8 +57,9 @@ CREATE TABLE `post` (
 
 CREATE TABLE `user` (
   `id` int(11) UNSIGNED NOT NULL,
-  `Nom` varchar(30) NOT NULL,
-  `Prenom` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `firstname` varchar(30) NOT NULL,
+  `emailMasked` text NOT NULL,
   `email` text NOT NULL,
   `password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
