@@ -22,10 +22,10 @@ router.post('/signup', verifyPassword, userCtrl.signup);
 // Endpoint connexion d'un utilisateur
 router.post('/login', createAccountLimiter, userCtrl.login); 
 //Endpoint get user (voir son profil)
-router.get('/', userCtrl.getUser);
+router.get('/:id', userCtrl.getUser);
 //Endpoint delete user
-router.delete('/', userCtrl.deleteUser);
+router.delete('/:id', userCtrl.deleteUser);
 //Endpoint update user
-router.put('/', userCtrl.modifyUser);
+router.put('/:id', userCtrl.modifyUser);
 
 module.exports = router;

@@ -16,7 +16,7 @@ dbconnect.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
       return console.error('error: ' + error.message);                          
     }
     // Connexion validée
-    console.log("Connexion à la base de données MySQL est validée !");              
+    console.log("La connexion à la base de données MySQL est validée !");              
   });
   
   module.exports = dbconnect;
