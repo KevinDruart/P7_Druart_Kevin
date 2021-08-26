@@ -6,6 +6,8 @@ const userCtrl = require('../controllers/user');
 
 const rateLimit = require("express-rate-limit");
 
+const verifyPassword = require('../middleware/verify-password');        // importation du middleware
+
 //limite de connexion
 const createAccountLimiter = rateLimit({
     // 1 heure
@@ -16,7 +18,7 @@ const createAccountLimiter = rateLimit({
   });
 
 // Endpoint crée un nouvel utilisateur
-router.post('/signup', userCtrl.signup); 
+router.post('/signup', verifyPassword, userCtrl.signup); 
 // Endpoint connexion d'un utilisateur
 router.post('/login', createAccountLimiter, userCtrl.login); 
 //Endpoint get user (voir son profil)
