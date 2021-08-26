@@ -19,5 +19,11 @@ const createAccountLimiter = rateLimit({
 router.post('/signup', userCtrl.signup); 
 // Endpoint connexion d'un utilisateur
 router.post('/login', createAccountLimiter, userCtrl.login); 
+//Endpoint get user (voir son profil)
+router.get('/', userCtrl.getUser);
+//Endpoint delete user
+router.delete('/', userCtrl.deleteUser);
+//Endpoint update user
+router.put('/', userCtrl.modifyUser);
 
 module.exports = router;

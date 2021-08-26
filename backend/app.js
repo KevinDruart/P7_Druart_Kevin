@@ -7,11 +7,6 @@ const bodyParser = require('body-parser');
 
 //protection des requetes http
 const helmet = require('helmet');
-const hpp = require('hpp');
-
-//parametre cookie
-const cookieSession = require('cookie-session');
-const Keygrip = require('keygrip');
 
 //protection contres les attaques xss
 const xssClean = require('xss-clean');
@@ -19,6 +14,7 @@ const xssClean = require('xss-clean');
 const path = require('path');
 
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
 
 require('dotenv').config();
 
@@ -31,25 +27,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Cookie session
-app.use(cookieSession({
-
-    name: 'session',
-    keys: new Keygrip([process.env.COOKIESECRET], 'SHA256', 'base64'),
-
-    // Cookie Options
-    path: '/',
-    httpOnly: true,
-    secure: true,
-    signed: true,
-    maxAge: 600000, // 10 minutes
-    sameSite: 'strict'
-}));
-
-
-// Protection contre les attaques DOS
-app.use(hpp());
-
 // Protection contre les attaques XSS
 app.use(xssClean());
 
@@ -58,10 +35,11 @@ app.use(bodyParser.json());
 //définit des en-têtes de réponse HTTP liés à la sécurité pour se protéger contre certaines vulnérabilités Web bien connues
 app.use(helmet());
 
-
-
 //route users
 app.use('/api/auth', userRoutes);
+
+// route post
+app.use('/api/post', postRoutes);
 
 //routes de stockage pour les images
 app.use('/images', express.static(path.join(__dirname, 'images')));
