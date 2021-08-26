@@ -145,16 +145,21 @@ exports.login = (req, res, next) => {
 
 /*-------------------------------------- GET USER -------------------------------------*/
 exports.getUser = (req, res, next) => {
-  let userId = req.body.userId;
+  let userId = req.userIdToken;
 
-  //on récupére les informations de l'utilisateur avec son id
-  let getUserSql = 'SELECT * FROM user where id = ?';
-  let inserts = userId;
-  getUserSql = mysql.format(getUserSql, inserts);
+  if (userId === req.params.id) {
+    //on récupére les informations de l'utilisateur avec son id
+    let getUserSql = 'SELECT * FROM user where id = ?';
+    let inserts = userId;
+    getUserSql = mysql.format(getUserSql, inserts);
 
-  res.status(200).json({
-    message: "route get user"
-  });
+    res.status(200).json({
+      message: "route get user"
+    });
+  }
+  else {
+    res.status(401).json({ error: "Action non autorisée !" });
+  }
 };
 
 /*------------------------------------UPDATE USER------------------------------------- */
