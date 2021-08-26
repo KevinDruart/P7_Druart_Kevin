@@ -25,31 +25,58 @@ exports.signup = (req, res, next) => {
     maskAtTheRate: false
   };
 
-  let email= req.body.email;
-  let name= req.body.name;
-  let firstName= req.body.firstname;
-  let password= req.body.password;
-  let emailMasked= maskData.maskEmail2(req.body.email, emailMask2Options);
-  
+  let email = req.body.email;
+  let name = req.body.name;
+  let firstName = req.body.firstname;
+  let password = req.body.password;
+  let emailMasked = maskData.maskEmail2(req.body.email, emailMask2Options);
+
   console.log("email: " + email + " name: " + name + " firstname: " + firstName + " password: " + password + " emailMasked: " + emailMasked);
 
   //On attribue un nombre de tour au hashage et ou salage
   const saltRounds = 10;
-  // On appelle la méthode hash de bcrypt
-  bcrypt
-  //on hash le mot de passe 
-    .hash(req.body.password, saltRounds)
-    // On récupère le hash de mdp qu'on va enregister en tant que nouvel utilisateur dans la BBD mongoDB
-    .then((hash) => {
-// On enregistre l'utilisateur dans la base de données
-      user
-        //sauvegarde de l'utilisateur
-        console.log(user)
-        .save()
-        .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-        .catch(() => res.status(401).json({ error: "Email existant" }));
-    })
-    .catch((error) => res.status(500).json({ error }));
+
+  //regex email 
+  //chiffre lettre - _ ç  (autorisé)@groupomania.fr
+  //exemples attendu: 
+  //contact95@groupomania.fr
+  //jean-françois@groupomania.fr
+  let regexMail = /^[a-z0-9ç_-]+@groupomania\.fr$/;
+
+  //on test l'adresse email
+  let testMail = regexMail.test(email);
+console.log(testMail);
+  //on agit si l'email est correcte 
+  if (testMail) {
+    // On appelle la méthode hash de bcrypt
+    bcrypt.hash(password, saltRounds, (error, hash) => {
+      // On prepare les données utilisateur 
+      let sql = "INSERT INTO `user`(`name`, `firstname`, `emailMasked`, `email`, `password`) VALUES (?, ?, ?, ?, ?, ?)";
+      let inserts = [name, firstName, emailMasked, email, hash];
+      sql = mysql.format(sql, inserts);
+
+      // envoi de la requête a la base de données
+      const userSignup = dbconnect.query(sql, (error, user) => {
+        // si aucune erreur après la requête           
+        if (!error) {
+          res.status(201).json({ message: "utilisateur crée" });
+        } else {
+          // erreur utilisateur déjà existant
+          return res.status(409).json({ error: "Cet utilisateur existe déjà !" })
+        }
+      });
+
+    });
+  }
+  //si l'email n'est pas correcte 
+  else {
+    //on retourne un message d'erreur
+    res.status(400).json({
+      message: "Le format d'email n'est pas correcte, il doit obligatoirement s'agir de votre email @groupomania.fr"
+    });
+  }
+
+
 };
 
 
@@ -99,9 +126,9 @@ exports.getUser = (req, res, next) => {
 
 /*------------------------------------UPDATE USER------------------------------------- */
 exports.modifyUser = (req, res, next) => {
-res.status(200).json({
-  message: "route update user"
-});
+  res.status(200).json({
+    message: "route update user"
+  });
 }
 
 /*------------------------------------DELETE USER------------------------------------- */
