@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Aug 25, 2021 at 12:23 PM
+-- Generation Time: Aug 26, 2021 at 03:16 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -64,7 +64,7 @@ CREATE TABLE `user` (
   `emailMasked` text NOT NULL,
   `email` text NOT NULL,
   `password` text NOT NULL,
-  `roles` varchar(5) NOT NULL
+  `roles` varchar(6) NOT NULL DEFAULT 'member'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -112,7 +112,7 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
