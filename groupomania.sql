@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Aug 25, 2021 at 10:16 AM
+-- Generation Time: Aug 25, 2021 at 12:23 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -30,9 +30,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
   `comment` text NOT NULL,
-  `time_comment` datetime NOT NULL
+  `time_comment` datetime NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -43,9 +44,10 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `post` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `post` text NOT NULL,
-  `image` text NOT NULL,
+  `title` varchar(30) NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `content` text NOT NULL,
+  `image` varchar(250) NOT NULL,
   `time_post` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -61,7 +63,8 @@ CREATE TABLE `user` (
   `firstname` varchar(30) NOT NULL,
   `emailMasked` text NOT NULL,
   `email` text NOT NULL,
-  `password` text NOT NULL
+  `password` text NOT NULL,
+  `roles` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -72,13 +75,16 @@ CREATE TABLE `user` (
 -- Indexes for table `comment`
 --
 ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_comment_id` (`user_id`),
+  ADD KEY `fk_post_id` (`post_id`);
 
 --
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user_id` (`user_id`);
 
 --
 -- Indexes for table `user`
@@ -107,6 +113,23 @@ ALTER TABLE `post`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `fk_post_id` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_user_comment_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `post`
+--
+ALTER TABLE `post`
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
