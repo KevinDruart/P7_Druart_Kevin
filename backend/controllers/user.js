@@ -56,60 +56,52 @@ exports.signup = (req, res, next) => {
     //On attribue un nombre de tour au hashage et ou salage
     const saltRounds = 10;
 
-    db.query("SELECT * FROM user WHERE email = req.body.email"),
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      }
-
-
     // On appelle la méthode hash de bcrypt
     bcrypt.hash(password, saltRounds, (error, hash) => {
       //Verification récupération des données
       console.log("email: " + email + " name: " + name + " firstname: " + firstName + " password: " + password + " emailMasked: " + emailMasked + " hash " + hash);
-      // db.query("INSERT INTO user (`name`, `firstname`,`emailMasked`, `email`, `password`,) VALUES (?, ?, ?, ?, ?)[name,firstName, email, emailMasked, hash] WHERE EXIST (SELECT * FROM user WHERE email = email)")
-      db.query(
-        "INSERT INTO user (name, firstname, emailMasked, email, password) VALUES (?,?,?,?,?)",
-        [name, firstName, emailMasked, email, hash],
-        (err, result) => {
+      //On vérifie si on a bien une adresse email
+      if (req.body.email) {
+        //On vérifie si cet adresse email est deja enregistrer dans la BDD
+        db.query('SELECT * FROM user WHERE email = ?', [req.body.email], (err, result) => {
+          //si on a une erreur de requete, on l'affiche
           if (err) {
-            console.log(err);
-          } else {
-            res.send("Inscription reussi");
+            res.json(error(err.message))
           }
-        }
-      );
-
-
-      /*if (userExist) {
-        res.status(400).json({ message: "Vous etes deja inscrit" });
-      }
-      else {
-        // On prepare les données utilisateur 
-        let signupSql = ";
-        let inserts = [name, firstName, emailMasked, email, hash];
-        signupSql = mysql.format(signupSql, inserts);
- 
-        console.log(signupSql);
- 
-        // envoi de la requête a la base de données
-        const userSignup = dbconnect.query(signupSql, (error, user) => {
-          // si aucune erreur après la requête           
-          if (!error) {
-            res.status(201).json({ message: "utilisateur crée" });
-          } 
+          //sinon on renvoi le result
           else {
-            // erreur utilisateur déjà existant
-            return res.status(409).json({ error: "Cet utilisateur existe déjà !" })
+            //si le result n'est pas undefined (cela signifie que cet email est deja enregistrer)
+            if (result[0] != undefined) {
+              //On retourne alors un message
+              res.status(500).json({ message: "adresse email deja enregistré" })
+            }
+            //sinon on insert le nouvelle utilisateur 
+            else {
+              db.query('INSERT INTO user(name, firstname, emailMasked, email, password) VALUES(?,?,?,?,?)', [name, firstName, emailMasked, email, hash],
+                (err, result) => {
+                  //si on a une erreur dans la requete
+                  if (err) {
+                    //on affiche cet erreur
+                    res.json(error(err.message))
+                  }
+                  //sinon
+                  else {
+                    //On confirme par un message la création de l'utilisateur
+                    res.status(200).json({ message: "utilisateur ajouter" })
+                  }
+                })
+            }
           }
-        });
-      }*/
+        })
+      }
+      //si on a pas d'email saisi
+      else {
+        //on affiche un message
+        res.status(500).json({ message: "aucune adresse email saisi" })
+      }
     });
   }
-  //si l'email n'est pas correcte 
+  //si l'email n'est pas une adresse email professionel
   else {
     //on retourne un message d'erreur
     res.status(400).json({ message: "Le format d'email n'est pas correcte, il doit obligatoirement s'agir de votre email @groupomania.fr" });
