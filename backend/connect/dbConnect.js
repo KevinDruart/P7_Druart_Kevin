@@ -1,7 +1,8 @@
 const mysql = require('mysql');
+
 console.log('Connexion à la base de données...');
 
-let dbconnect = mysql.createPool({ 
+let db = mysql.createPool({ 
     host: 'localhost', 
     user: 'root', 
     password: 'root', 
@@ -10,7 +11,7 @@ let dbconnect = mysql.createPool({
 });
 
 // Test de la connexion avec la base de données
-dbconnect.query('SELECT 1 + 1 AS solution', function (error, results, fields) {     
+db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {     
     if (error) {
         // Erreur de connexion
       return console.error('error: ' + error.message);                          
@@ -19,4 +20,4 @@ dbconnect.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
     console.log("La connexion à la base de données MySQL est validée !");              
   });
   
-  module.exports = dbconnect;
+  module.exports = db;
