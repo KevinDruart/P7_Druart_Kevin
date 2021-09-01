@@ -39,7 +39,7 @@ app.use(helmet());
 app.use('/api/auth', userRoutes);
 
 // route post
-app.use('/api/post', postRoutes);
+app.use('/api/messages', postRoutes);
 
 //routes de stockage pour les images
 app.use('/images', express.static(path.join(__dirname, 'images')));
