@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <!--meta-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--title & favicon-->
+    <title>Groupomania</title>
+    <!--fontawesome-->
+    <script src="https://kit.fontawesome.com/490f3c0b00.js" crossorigin="anonymous"></script>
+    <!--CSS-->
+    <link rel="stylesheet" href="./frontend/assets/css/index.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="title">
+            <img src="./frontend/assets/images/groupomania.png" alt="logo groupomania"/>
+
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Me connecter</label>
+                <label for="signup" class="slide signup">M'enregistrer</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="#" class="login">
+                    <div class="field">
+                        <input type="text" placeholder="Adresse email" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Mot de passe" required>
+                    </div>
+                    <div class="pass-link">
+                        <a href="#">Mot de passe oublier?</a>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Me connecter">
+                    </div>
+                    <div class="signup-link">
+                        Vous n'êtes pas membre? <a href="">enregistrez vous</a>
+                    </div>
+                </form>
+                <form action="#" class="signup">
+                    <div class="field">
+                        <input type="text" placeholder="Nom" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="Prénom" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" placeholder="Adresse email" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="mot de passe" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Confirmer le mot de passe" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="m'enregistrer">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--footer-->
+    <footer class="footer">
+
+        <div class="copyright"> Groupomania ©2021 - All right reserved.</div>
+
+    </footer>
+    <!--script js-->
+
+    <script src="./frontend/assets/js/index.js"></script>
+
+
+</body>
+
+</html>
