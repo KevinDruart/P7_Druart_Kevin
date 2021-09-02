@@ -1,0 +1,137 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+
+}
+
+.container-img {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    height: 70px;
+}
+
+.img {
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: lightslategray;
+    BORDER: 1px solid ORANGE;
+    border-radius: 10px;
+}
+
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-decoration: none;
+    padding: 1%;
+    color: white;
+}
+
+.title {
+    text-align: center;
+}
+
+.form-group {
+    background-color: lightgray;
+    padding: 2% 0 3% 0;
+    border-radius: 20px;
+
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 4%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-item {
+    padding-right: 5%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background-color: lightsalmon;
+    border-radius: 20px;
+    border: 1px solid gray;
+    text-decoration: none;
+    height: 30px;
+    WIDTH: 80PX;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    color: black;
+}
+
+
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    background-color: lightslategray;
+    BORDER: 1px solid ORANGE;
+    border-radius: 10px;
+    padding: 1%;
+    margin-top: 5%;
+}
+
+.copyright {
+    color:white;
+    font-size: 0.8em;
+}
+
+.info {
+    color: lightgrey;
+    font-size: 0.8em;
+}
+
+.link {
+    text-decoration: none;
+}

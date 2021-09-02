@@ -1,42 +1,142 @@
 //requis
-//schemas modele sauce
-const PostModele = require('../models/post');
+
 // Récupération du module 'file system' de Node permettant de gérer les images
 const fs = require('fs');
 
+//connexion a la bdd
+const db = require('../connect/dbConnect.js');
+
+//requete sql
+const mysql = require('mysql');
+
 /*------------------------------------CREATE POST------------------------------------- */
 exports.createPost = (req, res, next) => {
-    res.status(200).json({ message: "route create post"});
-
+  //on recupere l'id de l'utilisateur
+  let userId = req.userIdToken;
+  //on recupere les donnees
+  //titre du post
+  let title = req.body.title;
+  let content = req.body.content;
+  let image = req.file;
+  //si on recupere un id
+  if (userId != null) {
+    //on recupere tout les posts
+    db.query('SELECT * FROM user WHERE id=? ', [userId], (err, result) => {
+      //si une erreur dans la requete
+      if (err) {
+        //on affiche un message
+        res.status(500).json({ message: "erreur dans la requete" });
+      }
+      //sinon
+      else {
+        if (result[0] != undefined) {
+          //on insert le post
+          db.query('INSERT INTO post(title, user_id, content, image) VALUES(?,?,?,?)', [title, userId, content, image],
+          (err, result) => {
+            //si une erreur dans la requete
+            if (err) {
+              //on affiche un message
+              res.status(500).json({ message: "erreur dans la requete" });
+            }
+            //sinon
+            else {
+              res.status(200).json({ message: "post ajouter" })
+            }
+          })
+        }
+        //sinon
+        else {
+          //on affiche un message
+          res.status(500).json({ message: "id utilisateur introuvable" });
+        }
+      }
+    })
+  }
+  //sinon
+  else {
+    //on affiche un message 
+    res.status(400).json({ message: "vous devez etre connecter pour voir les posts" });
+  }
 };
 
 
 
 /*---------------------------------READ ALL POST--------------------------------- */
 exports.getAllPost = (req, res, next) => {
-
-res.status(200).json({message: "route get post"});
- 
+  //on recupere l'id de l'utilisateur
+  let userId = req.userIdToken;
+  //si on recupere un id
+  if (userId != null) {
+    //on recupere tout les posts
+    db.query('SELECT * FROM user WHERE id=? ', [userId], (err, result) => {
+      //si une erreur dans la requete
+      if (err) {
+        //on affiche un message
+        res.status(500).json({ message: "erreur dans la requete" });
+      }
+      //sinon
+      else {
+        if (result[0] != undefined) {
+          //on recupere tout les posts
+          db.query('SELECT * FROM post ', (err, result) => {
+            //si une erreur dans la requete
+            if (err) {
+              //on affiche un message
+              res.status(500).json({ message: "erreur dans la requete" });
+            }
+            //sinon
+            else {
+              //si le result n'est pas undefined
+              if (result[0] != undefined) {
+                //on affiche un message d'erreur
+                console.log("voici les posts");
+                //on renvoie le result
+                res.status(200).json({ result });
+              }
+              //sinon
+              else {
+                //on affiche un message
+                res.status(500).json({ message: "aucun post" })
+              }
+            }
+          })
+        }
+        //sinon
+        else {
+          //on affiche un message
+          res.status(500).json({ message: "id utilisateur introuvable" });
+        }
+      }
+    })
+  }
+  //sinon
+  else {
+    //on affiche un message 
+    res.status(400).json({ message: "vous devez etre connecter pour voir les posts" });
+  }
 };
+
+
+
 
 /*------------------------------------UPDATE POST------------------------------------- */
 exports.modifyPost = (req, res, next) => {
-res.status(200).json({message: "route update post"});
+  res.status(200).json({ message: "route update post" });
 
 }
 
 /*------------------------------------DELETE POST------------------------------------- */
 exports.deletePost = (req, res, next) => {
-    res.status(200).json({message: "route delete post"});
+  res.status(200).json({ message: "route delete post" });
 
- 
+
 
 };
 
 /*----------------------------------like and dislike post------------------------------------ */
 
 exports.likeDislikePost = (req, res, next) => {
-    res.status(200).json({message: "route like post"})
+  res.status(200).json({ message: "route like post" })
   /*let messageResponse = "Like ou Dislike mis à jour";
   SauceModele.findOne({
       _id: req.params.id
