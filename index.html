@@ -18,7 +18,7 @@
 
     <div class="wrapper">
         <div class="title">
-            <img src="./frontend/assets/images/groupomania.png" alt="logo groupomania"/>
+            <img src="./frontend/assets/images/groupomania.png" alt="logo groupomania" />
 
         </div>
         <div class="form-container">
@@ -30,43 +30,66 @@
                 <div class="slider-tab"></div>
             </div>
             <div class="form-inner">
-                <form action="#" class="login">
+                <form action="#" class="login" id="form-login">
                     <div class="field">
-                        <input type="text" placeholder="Adresse email" required>
+                        <input id="email-login" type="text" placeholder="Adresse email">
                     </div>
                     <div class="field">
-                        <input type="password" placeholder="Mot de passe" required>
+                        <input id="password-login" type="text" placeholder="Mot de passe">
                     </div>
                     <div class="pass-link">
                         <a href="#">Mot de passe oublier?</a>
+                        <div id="error-login"></div>
                     </div>
                     <div class="field btn">
                         <div class="btn-layer"></div>
-                        <input type="submit" value="Me connecter">
+                        <input id="btnValidLogin" type="submit" value="Me connecter">
                     </div>
                     <div class="signup-link">
                         Vous n'êtes pas membre? <a href="">enregistrez vous</a>
                     </div>
                 </form>
-                <form action="#" class="signup">
+                <form action="#" class="signup" id="form-signup">
                     <div class="field">
-                        <input type="text" placeholder="Nom" required>
+                        <div class="input-container">
+                            <em class="far fa-user icon icon-name"></em>
+                            <input id="name-signup" type="text" placeholder="Nom">
+                        </div>
+                        <span id="error-name">
+                            Votre nom n'est pas correcte.
+                        </span>
                     </div>
                     <div class="field">
-                        <input type="text" placeholder="Prénom" required>
+                        <div class="input-container">
+                            <em class="far fa-user icon icon-firstname"></em>
+                            <input id="firstname-signup" type="text" placeholder="Prénom">
+                        </div>
+                        <span id="error-firstname">
+                            Votre prénom n'est pas correcte.
+                        </span>
                     </div>
                     <div class="field">
-                        <input type="text" placeholder="Adresse email" required>
+                        <div class="input-container">
+                            <em class="fas fa-at icon icon-email"></em>
+                            <input id="email-signup" type="text" placeholder="Adresse email">
+                        </div>
+                        <span id="error-email">
+                            Votre email n'est pas correcte.
+                        </span>
                     </div>
                     <div class="field">
-                        <input type="password" placeholder="mot de passe" required>
+                        <div class="input-container">
+                            <em class="fas fa-user-lock icon-password"></em>
+                            <input id="password-signup" type="text" placeholder="mot de passe">
+                        </div>
+                        <span id="error-password">
+                            Votre mot de passe n'est pas correcte.
+                        </span>
                     </div>
-                    <div class="field">
-                        <input type="password" placeholder="Confirmer le mot de passe" required>
-                    </div>
+                    <div id="error-signup"></div>
                     <div class="field btn">
                         <div class="btn-layer"></div>
-                        <input type="submit" value="m'enregistrer">
+                        <input id="btnValidSignup" type="submit" value="m'enregistrer">
                     </div>
                 </form>
             </div>
@@ -82,6 +105,7 @@
     <!--script js-->
 
     <script src="./frontend/assets/js/index.js"></script>
+    <script src="./frontend/assets/js/utils.js"></script>
 
 
 </body>

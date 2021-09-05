@@ -1,3 +1,5 @@
+
+/*----------------Header fixe------------------ */
 window.onscroll = function() {myFunction()};
 
 const header = document.getElementById("myHeader");
