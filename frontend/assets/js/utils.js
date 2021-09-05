@@ -27,11 +27,11 @@ const validateInput = (value, regex, errorTag, iconTag, input, message) => {
 }
 
 //validation nom
-const validateName = (inputName) => {
-  let inputNameBorder = document.getElementById('lastName');
+const validateName = (nameSignup) => {
+  let inputNameBorder = document.getElementById('name-signup');
   let msgError = document.getElementById('error-name');
   let iconError = document.querySelector('.icon-name');
-  const valueName = inputName.value.trim();
+  const valueName = nameSignup.value.trim();
 
   //regex letters
   const letters = /^[a-zA-ZéèçîïÉÈÎÏ]+([-'\s][a-zA-ZéèçîïÉÈÎÏ]+)?$/;
@@ -42,11 +42,11 @@ const validateName = (inputName) => {
 
 
 //validation prenom
-const validateFirstName = (inputFirstName) => {
-  let inputFirstnameBorder = document.getElementById('firstName');
+const validateFirstName = (firstnameSignup) => {
+  let inputFirstnameBorder = document.getElementById('firstname-signup');
   let msgErrorFirstname = document.getElementById('error-firstname');
   let iconErrorFirstname = document.querySelector('.icon-firstname');
-  const valueFirstName = inputFirstName.value.trim();
+  const valueFirstName = firstnameSignup.value.trim();
 
   // creation regex letters
   const letters = /^[a-zA-ZéèçîïÉÈÎÏ]+([-'\s][a-zA-ZéèçîïÉÈÎÏ]+)?$/;
@@ -55,47 +55,33 @@ const validateFirstName = (inputFirstName) => {
   validateInput(valueFirstName, letters, msgErrorFirstname, iconErrorFirstname, inputFirstnameBorder, "ne peut pas être un prénom. veuillez saisir un prénom valide uniquement avec des caracteres alphabétiques");
 }
 
-//validation address
-const validateAddress = (inputAddress) => {
-  let inputAddressBorder = document.getElementById('address');
-  let msgErrorAddress = document.getElementById('error-address');
-  let iconErrorAddress = document.querySelector('.icon-address');
-  const valueAddress = inputAddress.value.trim();
-
-  //creation de la regex pour adresse
-  const lettersNumbers = /^\d+\s[A-z]+\s[A-z]+/;
-
-  //appel de la fonction validate input et on passe les parametres necessaire
-  validateInput(valueAddress, lettersNumbers, msgErrorAddress, iconErrorAddress, inputAddressBorder, "n'est pas une adresse valide. Format d'adresse attendu : 25 rue origino");
-
-}
-
-//validation city
-const validateCity = (inputCity) => {
-  let inputCityBorder = document.getElementById('city');
-  let msgErrorCity = document.getElementById('error-city');
-  let iconErrorCity = document.querySelector('.icon-city');
-  const valueCity = inputCity.value.trim();
-
-  //création de la regex letter 
-  const letters = /^[a-zA-ZéèîïÉÈÎÏ][a-zA-ZéèîïÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zA-ZéèîïÉÈÎÏ]+)?$/;
-  
-  //appel de la fonction validate input et on passe les parametres necessaire
-  validateInput(valueCity, letters, msgErrorCity, iconErrorCity, inputCityBorder, "ne peut pas etre une ville et ce champ ne peut rester vide.");
-}
-
 //Validation email
-const validateEmail = (inputEmail) => {
-  let inputEmailBorder = document.getElementById('email');
+const validateEmail = (emailSignup) => {
+  let inputEmailBorder = document.getElementById('email-signup');
   let msgErrorEmail = document.getElementById('error-email');
   let iconErrorEmail = document.querySelector('.icon-email');
-  const valueEmail = inputEmail.value.trim();
+  const valueEmail = emailSignup.value.trim();
 
   //creation de la  regex mail
-  const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const mailFormat = /^[a-z0-9ç_-]+@groupomania\.fr$/;
 
   //appel de la fonction validate input et on passe les parametres necessaire
-  validateInput(valueEmail, mailFormat, msgErrorEmail, iconErrorEmail, inputEmailBorder, "ne peut pas etre un email. Format d'email attendu : contact@origino.fr");
+  validateInput(valueEmail, mailFormat, msgErrorEmail, iconErrorEmail, inputEmailBorder, "ne peut pas etre un email. Format d'email attendu : @groupomania.fr");
+}
+
+//validation Password
+const validatePassword = (passwordSignup) => {
+  let inputAddressBorder = document.getElementById('password-signup');
+  let msgErrorAddress = document.getElementById('error-password');
+  let iconErrorAddress = document.querySelector('.icon-pssword');
+  const valueAddress = passwordSignup.value.trim();
+
+  //creation de la regex pour adresse
+  const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+  //appel de la fonction validate input et on passe les parametres necessaire
+  validateInput(valueAddress, passRegex, msgErrorAddress, iconErrorAddress, inputAddressBorder, "Le mot de passe n'est pas assez complexe, il doit contenir majuscule, minuscule, chiffre et 1 caractére speciaux");
+
 }
 
 /*------------------------Validation a l'envoi--------------------------*/
