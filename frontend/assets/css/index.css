@@ -131,8 +131,12 @@ input[type="radio"]{
 form .field input:focus::placeholder{
   color: #b3b3b3;
 }
+
+.field.last {
+  margin-bottom: 40px;
+}
 .form-inner form .pass-link{
-  margin-top: 5px;
+  margin-top: 25px;
 }
 .form-inner form .signup-link{
   text-align: center;
@@ -185,7 +189,7 @@ form.signup {
     padding-bottom: 2PX;
 }
 
-#error-name, #error-firstname, #error-email, #error-password {
+#error-name, #error-firstname, #error-email, #error-password, #error-passwordLogin, #error-emailLogin {
   display: none;
 }
 
