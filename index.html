@@ -32,10 +32,22 @@
             <div class="form-inner">
                 <form action="#" class="login" id="form-login">
                     <div class="field">
-                        <input id="email-login" type="text" placeholder="Adresse email">
+                        <div class="input-container">
+                            <em class="fas fa-at icon icon-emailLogin"></em>
+                            <input id="email-login" type="text" placeholder="Adresse email">
+                        </div>
+                        <span id="error-emailLogin">
+                            email incorrecte.
+                        </span>
                     </div>
                     <div class="field">
-                        <input id="password-login" type="text" placeholder="Mot de passe">
+                        <div class="input-container">
+                            <em class="fas fa-user-lock icon-passwordLogin"></em>
+                            <input id="password-login" type="text" placeholder="Mot de passe">
+                        </div>
+                        <span id="error-passwordLogin">
+                            mot de pass incorrecte.
+                        </span>
                     </div>
                     <div class="pass-link">
                         <a href="#">Mot de passe oublier?</a>
@@ -77,7 +89,7 @@
                             Votre email n'est pas correcte.
                         </span>
                     </div>
-                    <div class="field">
+                    <div class="field last">
                         <div class="input-container">
                             <em class="fas fa-user-lock icon-password"></em>
                             <input id="password-signup" type="text" placeholder="mot de passe">
@@ -86,7 +98,7 @@
                             Votre mot de passe n'est pas correcte.
                         </span>
                     </div>
-                    <div id="error-signup"></div>
+                    <div id="message"></div>
                     <div class="field btn">
                         <div class="btn-layer"></div>
                         <input id="btnValidSignup" type="submit" value="m'enregistrer">
@@ -103,9 +115,9 @@
 
     </footer>
     <!--script js-->
-
-    <script src="./frontend/assets/js/index.js"></script>
     <script src="./frontend/assets/js/utils.js"></script>
+    <script src="./frontend/assets/js/index.js"></script>
+
 
 
 </body>
