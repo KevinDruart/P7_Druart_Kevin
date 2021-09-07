@@ -1,64 +1,62 @@
-/*
-const signup = () => {
-    let btnSignup = document.getElementById('signup');
-    let btnLogin = document.getElementById('login');
+/*----------------------------Creation de la vue des posts------------------------------ */
 
-    //ajout d'un evenement pour ecouter le click sur le bouton signup
-    btnLogin.addEventListener("click", function (e) {
-        e.preventDefault();
-        //code a executer au click
-        console.log("login");
-    });
-}*/
-
-/*----------------------------Creation de la vue des ajout de post------------------------------ */
-
-const sectionAddPost = () => {
+const posts = () => {
     //on attrape l'element content-app ou doit etre injecter le code
     let contentApp = document.getElementById('content-app');
 
+    /*----------------------CREATION-----------------------*/
     //Partie Ajouter un post
-    let addPostSection = create('section', 'id', 'addPost');
-    let addPostContainer = create('div', 'class', 'addPostContainer');
-    //title
-    let titlePostContainer = create('div', 'class', 'titlePostContainer');
-    let labelTitle = create('label', 'for', 'titlePost');
-    let addPostTitle = create('input', 'id', 'titlePost');
-    //content
-    let contentPostContainer = create('div', 'class', 'contentPostContainer');
-    let labelContent = create('label', 'for', 'textContent');
-    let addPostContent = create('input', 'id', 'textContent');
-    //image 
-    let imagePostContainer = create('div', 'class', 'imagePostContainer');
-    let labelImage = create('label', 'for', 'imagePost');
-    let addImagePost = create('input', 'id', 'imagePost');
+    let postSection = create('div', 'id', 'post');
+    
+    //Top
+    let topPostContainer = create('div', 'class', 'post__top');
+    let avatar = create('img', 'class', 'user__avatar post__avatar');
+    let userInfoPost = create('div', 'class', 'post__topInfo');
+    let userPost = create('h2', 'class', 'post__user');
+    let timePost = create('p', 'class', 'post__time');
 
-    //Bouton Valider l'ajout du post
-    let btnAddPost = create('button', 'id', 'btnAddPost');
+    //Content
+    let contentPostContainer = create('div', 'class', 'post__bottom');
+    let titlePost = create('h3', 'class', 'post__title');
+    let imgPostContent = create('img', 'class', 'post__ImgContent');
+    let contentPost = create('p', 'class', 'post__content');
 
-    //HIERARCHISATION
+
+    //Option
+    let OptionsPostContainer = create('div', 'class', 'post__options');
+    let likePostContainer = create('div', 'class', 'post__option');
+    let iconLike = create('i', 'class', 'far fa-thumbs-up');
+    let dislikePostContainer = create('div', 'class', 'post__option');
+    let iconDislike = create('i', 'class', 'far fa-thumbs-down');
+    let commentsPostContainer = create('div', 'class', 'post__option');
+    let iconComments = create('i', 'class', 'far fa-comments');
+
+    /*-------------------HIERARCHISATION--------------------*/
     //Partie add post
-    contentApp.appendChild(addPostSection);
-    addPostSection.appendChild(addPostContainer);
-    addPostContainer.appendChild(titlePostContainer);
-    addPostContainer.appendChild(contentPostContainer);
-    addPostContainer.appendChild(imagePostContainer);
-    addPostContainer.appendChild(btnAddPost);
-    titlePostContainer.appendChild(labelTitle);
-    titlePostContainer.appendChild(addPostTitle);
-    contentPostContainer.appendChild(labelContent);
-    contentPostContainer.appendChild(addPostContent);
-    imagePostContainer.appendChild(labelImage);
-    imagePostContainer.appendChild(addImagePost);
+    contentApp.appendChild(postSection);
+    postSection.appendChild(topPostContainer);
+
+    //top
+    topPostContainer.appendChild(avatar);
+    postContainer.appendChild(userInfoPost);
+    userInfoPost.appendChild(userPost);
+    userInfoPost.appendChild(timePost);
+
+    //contents
+    topPostContainer.appendChild(contentPostContainer);
+    contentPostContainer.appendChild(titlePost);
+    contentPostContainer.appendChild(imgPostContent);
+    contentPostContainer.appendChild(contentPost);
+
+    //options
+    topPostContainer.appendChild(OptionsPostContainer);
+    OptionsPostContainer.appendChild(likePostContainer);
+    likePostContainer.appendChild(iconLike);
+    OptionsPostContainer.appendChild(dislikePostContainer);
+    dislikePostContainer.appendChild(iconDislike);
+    OptionsPostContainer.appendChild(commentsPostContainer);
+    commentsPostContainer.appendChild(iconComments);
 
 }
 
 
-/*--------------------------------Vue des Posts---------------------------*/
-
-const createViewAllPost = () => {
-    let changeBtn = document.getElementById('actu');
-
-    changeBtn.innerHTML = ""
-
-}
