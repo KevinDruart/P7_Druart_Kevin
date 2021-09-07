@@ -1,5 +1,6 @@
-/***********************************Fonctions****************************************/
-/*--------------------------fonction création d'éléments----------------------------*/
+/*-------------------------------------Fonctions----------------------------------------*/
+/****************************************************************************************/
+/*-----------------------------fonction création d'éléments-----------------------------*/
 const create = (type, Qualified, nomType) => {
   let nomVariable = document.createElement(type);
   nomVariable.setAttribute(Qualified, nomType);
@@ -8,7 +9,8 @@ const create = (type, Qualified, nomType) => {
 
 
 
-
+/*----------------------------------EFFETS ET DESIGN----------------------------------- */
+/****************************************************************************************/
 /*--------------------------Effet switch login / signup-------------------------------- */
 const effectSwitch = () => {
   const loginForm = document.querySelector("form.login");
@@ -34,8 +36,29 @@ const effectSwitch = () => {
     return false;
   });
 }
-/*-----------------------------------Gestion validation --------------------------------- */
-/*--------------------------Validation en live du formulaire SIGNUP-----------------------*/
+/*---------------------------------------HEADER---------------------------------------- */
+/*---------------------------------------Header fixe----------------------------------- */
+
+const headerFixed = () => {
+  window.onscroll = function () { myFunction() };
+
+  const header = document.getElementById("myHeader");
+  const sticky = header.offsetTop;
+
+  function myFunction() {
+    if (window.pageYOffset > sticky) {
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+  }
+}
+
+
+
+/*-----------------------------------Gestion validation --------------------------------*/
+/****************************************************************************************/
+/*--------------------------Validation en live du formulaire SIGNUP---------------------*/
 
 //fonction validation input
 const validateInput = (value, regex, errorTag, iconTag, input, message) => {
