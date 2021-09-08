@@ -57,3 +57,23 @@ const home = () => {
 
 //on appelle la fonction Home qui contient la page
 home();
+
+
+const listePost = () => {
+  const posts = getRequest("http://localhost:3000/api/messages");
+  posts
+      //on a une promesse avec des donnees produits
+      .then((posts) => {
+          //création d'une boucle pour recuperer chaque produit un par un
+          posts.forEach((post) => {
+              //on appel la view createProduct pour afficher la page index et on lui passe chaque produit
+              postsView(post)
+          })
+      })
+      //la promesse n'a pas abouti
+      .catch((error) => {
+          //affichage de l'erreur
+          console.log(error);
+      })
+}
+listePost();

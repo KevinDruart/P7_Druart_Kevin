@@ -1,6 +1,6 @@
 /*----------------------------Creation de la vue des posts------------------------------ */
 
-const posts = () => {
+const postsView = () => {
     //on attrape l'element content-app ou doit etre injecter le code
     let contentApp = document.getElementById('content-app');
 
