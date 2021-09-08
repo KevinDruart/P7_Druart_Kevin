@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 console.log('Connexion à la base de données...');
 
-let db = mysql.createPool({ 
+let db = mysql.createConnection({ 
     host: 'localhost', 
     user: 'root', 
     password: 'root', 
