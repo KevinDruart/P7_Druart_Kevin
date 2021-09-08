@@ -1,13 +1,9 @@
 /*----------------------------Creation de la vue des posts------------------------------ */
 
-const postsView = () => {
+const postsView = (post) => {
     //on attrape l'element content-app ou doit etre injecter le code
-    let contentApp = document.getElementById('content-app');
+    let contentApp = document.getElementById('post');
 
-    /*----------------------CREATION-----------------------*/
-    //Partie Ajouter un post
-    let postSection = create('div', 'id', 'post');
-    
     //Top
     let topPostContainer = create('div', 'class', 'post__top');
     let avatar = create('img', 'class', 'user__avatar post__avatar');
@@ -18,7 +14,7 @@ const postsView = () => {
     //Content
     let contentPostContainer = create('div', 'class', 'post__bottom');
     let titlePost = create('h3', 'class', 'post__title');
-    let imgPostContent = create('img', 'class', 'post__ImgContent');
+    let imgPostContent = create("img", "src", data.imageUrl);
     let contentPost = create('p', 'class', 'post__content');
 
 
@@ -33,8 +29,7 @@ const postsView = () => {
 
     /*-------------------HIERARCHISATION--------------------*/
     //Partie add post
-    contentApp.appendChild(postSection);
-    postSection.appendChild(topPostContainer);
+    contentApp.appendChild(topPostContainer);
 
     //top
     topPostContainer.appendChild(avatar);
@@ -56,6 +51,29 @@ const postsView = () => {
     dislikePostContainer.appendChild(iconDislike);
     OptionsPostContainer.appendChild(commentsPostContainer);
     commentsPostContainer.appendChild(iconComments);
+
+        //recuperation de la date
+        let dateNow = new Date();
+        //transformation de la date actuel en date locale France
+        let dateLocale = dateNow.toLocaleString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        });
+
+        //Attribution des données aux élements créees
+        //top
+        userPost.textContent = user.name;
+        timePost.textContent = dateLocale;
+
+        //contents
+        titlePost.textContent = post.title;
+        contentPost.textContent = post.content;
+        
 
 }
 
