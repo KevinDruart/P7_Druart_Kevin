@@ -112,6 +112,7 @@ exports.getAllPost = (req, res, next) => {
   //sinon
   else {
     //on affiche un message 
+    console.log("erreur utilisateur pas connecter");
     res.status(400).json({ message: "vous devez etre connecter pour voir les posts" });
   }
 };

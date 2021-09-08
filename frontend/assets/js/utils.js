@@ -280,6 +280,7 @@ const validateFormLogin = () => {
       //on valide donc on envoie les infos au serveur
       console.log("on envoie les donnees au serveur")
       console.log(inputEmail.value + " " + inputPassword.value);
+      connectLogin(inputEmail.value,inputPassword.value);
     }
     //sinon on envoie pas les données et on affiche un message d'erreur
     else {
