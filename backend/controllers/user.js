@@ -23,7 +23,7 @@ const maskData = require('../node_modules/maskdata/index');
 // ###################################################################
 // ###################################################################
 // ###################################################################
-const testEmail = (email, res) => {
+/*const testEmail = (email, res) => {
   //regex email 
   //chiffre lettre - _ ç  (autorisé)@groupomania.fr
   //exemples attendu: 
@@ -37,7 +37,7 @@ const testEmail = (email, res) => {
       message: "Le format d'email n'est pas correcte, il doit obligatoirement s'agir de votre email @groupomania.fr"
     });
   }
-}
+}*/
 // ###################################################################
 // ###################################################################
 // ###################################################################
@@ -63,7 +63,7 @@ exports.signup = (req, res, next) => {
 
 
   //si l'email n'est pas une adresse email professionel
-  testEmail(email, res);
+  //testEmail(email, res);
 
   //on récupére le reste des données dans le body
   //nom
@@ -118,7 +118,7 @@ exports.login = (req, res, next) => {
   let email = req.body.email;
 
   //si l'email n'est pas une adresse email professionel
-  testEmail(email, res);
+  //testEmail(email, res);
 
   userModel.findOneBy(email)
     .then(user => {
