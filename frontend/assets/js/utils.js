@@ -58,7 +58,7 @@ const headerFixed = () => {
 
 /*-----------------------------------Gestion validation --------------------------------*/
 /****************************************************************************************/
-/*--------------------------Validation en live du formulaire SIGNUP---------------------*/
+
 
 //fonction validation input
 const validateInput = (value, regex, errorTag, iconTag, input, message) => {
@@ -79,6 +79,7 @@ const validateInput = (value, regex, errorTag, iconTag, input, message) => {
   }
 }
 
+/*--------------------------Validation en live du formulaire SIGNUP---------------------*/
 //validation nom
 const validateName = (nameSignup) => {
   let inputNameBorder = document.getElementById('name-signup');
@@ -226,9 +227,8 @@ const validateFormSignup = () => {
       messageValidation().innerText = "Inscription valider";
       messageValidation().style.color = 'green';
 
-      //on valide donc on envoie les infos au serveur
-      console.log("on envoie les donnees au serveur")
-      console.log(inputName.value + " " + inputFirstName.value + " " + inputEmail.value + " " + inputPassword.value);
+      //on appel la fonction signup
+      signup(); 
     }
     //sinon on envoie pas les données et on affiche un message d'erreur
     else {
@@ -264,23 +264,22 @@ const validateFormLogin = () => {
     //password
     let inputPassword = document.getElementById('password-login');
 
-  //Validation des valeurs saisies dans les inputs avec nos regex
+    //Validation des valeurs saisies dans les inputs avec nos regex
     //email
     let testEmail = regexMail.test(inputEmail.value);
     //password
     let testPassword = regexPassword.test(inputPassword.value);
 
 
-        //Les condition pour que l'inscription soit valider
+    //Les condition pour que l'inscription soit valider
     //tout les champs doivent etre true(vrai) a notre validation ci-dessus
     if (testEmail == true && testPassword == true) {
       errorLogin.innerText = "Connecter";
       errorLogin.style.color = 'green';
 
-      //on valide donc on envoie les infos au serveur
-      console.log("on envoie les donnees au serveur")
-      console.log(inputEmail.value + " " + inputPassword.value);
-      connectLogin(inputEmail.value,inputPassword.value);
+
+      //on appel la fonction connectLogin pour envoyer les information au serveur
+      login();
     }
     //sinon on envoie pas les données et on affiche un message d'erreur
     else {
