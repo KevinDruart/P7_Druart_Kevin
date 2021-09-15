@@ -158,6 +158,7 @@ exports.login = (req, res, next) => {
 
 /*-------------------------------------- GET USER -------------------------------------*/
 exports.getUser = (req, res, next) => {
+  
   userModel.findOneById(req.body.id)
     //on a notre promesse
     .then(user => {
@@ -224,25 +225,25 @@ exports.modifyUser = (req, res, next) => {
 
 /*------------------------------------DELETE USER------------------------------------- */
 exports.deleteUser = (req, res, next) => {
-      userModel.findOneBy(req.body.id)
-        //on a notre promesse
-        .then(user => {
-          //on verifie si l'id du body est identique au req.userIdToken
-          if (req.body.id === req.userIdToken) {
-            //on appel la view du profile et lui passe l'user
-            createProfile(user);
-          }
-          //sinon
-          else {
-            //on retourne un message d'erreur
-            res.status(400).json({ message: "Votre id est introuvable" });
-          }
+  userModel.findOneBy(req.body.id)
+    //on a notre promesse
+    .then(user => {
+      //on verifie si l'id du body est identique au req.userIdToken
+      if (req.body.id === req.userIdToken) {
+        //on appel la view du profile et lui passe l'user
+        createProfile(user);
+      }
+      //sinon
+      else {
+        //on retourne un message d'erreur
+        res.status(400).json({ message: "Votre id est introuvable" });
+      }
 
-        })
-        //erreur promesse
-        .catch(error => {
-          return res.status(401).json({
-            message: error
-          });
-        });
-    };
+    })
+    //erreur promesse
+    .catch(error => {
+      return res.status(401).json({
+        message: error
+      });
+    });
+};
