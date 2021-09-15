@@ -13,10 +13,12 @@ const xssClean = require('xss-clean');
 
 const path = require('path');
 
+require('dotenv').config();
+
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 
-require('dotenv').config();
+
 
 const app = express();
 

@@ -139,10 +139,14 @@ const signup = () => {
         //on envoie les données
         const sendNewUser = postRequest("http://localhost:3000/api/auth/signup", options);
         //verif données dans user
-        console.log(user);
+        //console.log(user);
+
+        console.log(sendNewUser+ "senduser");
+        //recoverId();
         //on redirige vers la page home en passant quelques informations
-        window.location = `./home.html?id=${sendNewUser.id}&name=${user.name}&firstname=${user.firstname}`
+        //window.location = `./home.html?id=${user.id}&name=${user.name}&firstname=${user.firstname}`
     }
     //on appel la fonction d'envoi
-    postUser();
+    postUser(); 
 }
+
