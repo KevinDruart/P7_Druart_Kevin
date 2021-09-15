@@ -45,6 +45,7 @@ const login = () => {
     const options = {
         headers: {
             'Content-Type': 'application/json',
+            //'Authorization': 'Bearer ' + sessionStorage.getItem('userToken')
         },
         method: "POST",
         body: JSON.stringify(user),
@@ -55,12 +56,26 @@ const login = () => {
     //Envoie données formulaire
     const getUser = () => {
         const sendUser = postRequest("http://localhost:3000/api/auth/login", options);
-        console.log(user);
+        sendUser
+            .then((result) => {
+                //on verifie le resultat dans le result
+                console.log(result);
+                //on sauvegarde les donnees dans le sessionStorage
+                //userToken
+                sessionStorage.setItem("userToken", result.token);
+                //userId
+                sessionStorage.setItem("userId", result.userId);
+                //on redirige vers la page de connexion
+                window.location = `./home.html`
+            })
+            .catch((err) => {
+                console.log(err);
+
+            });
     }
 
     //on appel la fonction d'envoi
     getUser();
-
 }
 
 /*-------------------------Recupération des inputs Signup---------------------------------- */
@@ -139,14 +154,17 @@ const signup = () => {
         //on envoie les données
         const sendNewUser = postRequest("http://localhost:3000/api/auth/signup", options);
         //verif données dans user
-        //console.log(user);
-
-        console.log(sendNewUser+ "senduser");
-        //recoverId();
-        //on redirige vers la page home en passant quelques informations
-        //window.location = `./home.html?id=${user.id}&name=${user.name}&firstname=${user.firstname}`
+        sendNewUser
+            .then((newUser) => {
+                alert("Inscription validé, vous pouvez désormais vous connecter");
+                //on redirige vers la page de connexion
+                window.location = `./index.html`
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
     //on appel la fonction d'envoi
-    postUser(); 
+    postUser();
 }
 

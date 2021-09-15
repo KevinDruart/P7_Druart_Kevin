@@ -1,12 +1,63 @@
+
+
+const token = sessionStorage.getItem("userToken");
+const userId = sessionStorage.getItem("userId");
+let postsPage = document.getElementById('posts_page');
+let errorContainer = document.getElementById('error-message');
+let titleError = create('h1', 'class', 'title-error');
+let messageError = create('p', 'class', 'text-error');
+
+
+if (token === null && userId === null) {
+  console.log("vous n'etes pas connecter");
+  //on desactive laffichage de la page
+  postsPage.style.display = "none";
+
+
+  //on active laffichage de la balise error
+  errorContainer.style.display = "block";
+  errorContainer.style.textAlign ="center";
+  //on creer le message qui sera passer dans la balise error
+  let titleError = create('h1', 'class', 'title-error');//titre
+  let messageError = create('p', 'class', 'text-error');//message
+  let buttonError = create ('button', 'onClick', "window.location.href='index.html'");//bouton redirection connexion
+
+  //hierarchisation
+  errorContainer.appendChild(titleError);
+  errorContainer.appendChild(messageError);
+  errorContainer.appendChild(buttonError);
+
+  //attribution données ou message
+  titleError.textContent = 'Espace reservé';
+  messageError.textContent ='Vous devez etre connecter pour accéder a cet page';
+  buttonError.textContent = 'Me connecter';
+
+}
+
+const signout = () => {
+  let btnSignout = document.getElementById('signout');
+
+  btnSignout.addEventListener('click', (e) =>{
+    e.preventDefault();
+    sessionStorage.clear();
+    alert("Vous êtes désormais déconnecter. A bientôt");
+    window.location.href='index.html';
+    
+  })
+}
+
+signout();
+
+/*
 const home = () => {
   //on appelle la fonction pour fixer l'header
-  headerFixed();
-  
+
+
   //fonction addPicture
   const addPicture = () => {
     //on recupere le bouton ajouter une photo
     let btnPicture = document.getElementById('add-picture');
-    //on recupere le fontawesome close 
+    //on recupere le fontawesome close
     let btnClosePictureInput = document.querySelector('.close-pictureInput');
     //on recupere l'input ajouter une photo
     let input = document.getElementById('add-pictureInput');
@@ -55,9 +106,6 @@ const home = () => {
   addPost();
 }
 
-//on appelle la fonction Home qui contient la page
-home();
-
 
 const listePost = () => {
   const posts = getRequest("http://localhost:3000/api/messages");
@@ -76,4 +124,4 @@ const listePost = () => {
           console.log(error);
       })
 }
-listePost();
+listePost();*/
