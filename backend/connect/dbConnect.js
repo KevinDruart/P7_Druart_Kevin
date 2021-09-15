@@ -2,18 +2,12 @@ const mysql = require('mysql');
 
 console.log('Connexion à la base de données...');
 
-const myHost = process.env.dbConnectHost;
-const myUser = process.env.dbConnectUser;
-const myPassword = process.env.dbConnectPassword;
-const myPort = process.env.dbConnectPort;
-const myDb = process.env.dbConnectDb;
-
 let db = mysql.createConnection({ 
-    host : myHost, 
-    user : myUser, 
-    password : myPassword, 
-    port : myPort,
-    database : myDb, 
+    host : process.env.dbConnectHost, 
+    user : process.env.dbConnectUser, 
+    password : process.env.dbConnectPassword, 
+    port : process.env.dbConnectPort,
+    database : process.env.dbConnectDb, 
 });
 
 // Test de la connexion avec la base de données
