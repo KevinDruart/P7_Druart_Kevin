@@ -158,28 +158,23 @@ exports.login = (req, res, next) => {
 
 /*-------------------------------------- GET USER -------------------------------------*/
 exports.getUser = (req, res, next) => {
-  //on recupere l'utilisateur avec son id
-  db.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, result) => {
-    //si une erreur dans la requete
-    if (err) {
-      //on affiche un message
-      res.status(500).json({ message: "erreur dans la requete" });
-    }
-    //sinon
-    else {
-      //si le result n'est pas undefined
-      if (result[0] != undefined) {
-        //on affiche un message
-        console.log(result);
-        res.status(200).json({ result })
+  userModel.findOneBy(req.body.id)
+    .then(user => {
+      //on verifie si l'id du body est identique au req.userIdToken
+      if (req.body.id === req.userIdToken) {
+        //on appel la view du profile et lui passe l'user
+        createProfile(user);
       }
-      //sinon
       else {
-        //on affiche un message
-        res.status(400).json({ message: "id utilisateur introuvable" })
+        res.status(400).json({ message : "Votre id est introuvable"});
       }
-    }
-  })
+        
+    })
+    .catch(error => {
+      return res.status(401).json({
+        message: error
+      });
+    });
 };
 
 /*------------------------------------UPDATE USER------------------------------------- */

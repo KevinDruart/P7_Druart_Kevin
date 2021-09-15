@@ -3,11 +3,11 @@ const mysql = require('mysql');
 console.log('Connexion à la base de données...');
 
 let db = mysql.createConnection({ 
-    host: 'localhost', 
-    user: 'root', 
-    password: 'root', 
-    port: '3307',
-    database: 'groupomania', 
+    host: process.env.dbConnectHost, 
+    user: process.env.dbConnectUser, 
+    password: process.env.dbConnectPassword, 
+    port: process.env.dbConnectPort,
+    database: process.env.dbConnectDb, 
 });
 
 // Test de la connexion avec la base de données
