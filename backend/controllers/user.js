@@ -81,7 +81,7 @@ exports.signup = (req, res, next) => {
   // On appelle la méthode hash de bcrypt
   bcrypt.hash(password, saltRounds, (error, hash) => {
     //Verification récupération des données
-    console.log("email: " + email + " name: " + name + " firstname: " + firstName + " password: " + password + " emailMasked: " + emailMasked + " hash " + hash);
+    //console.log("email: " + email + " name: " + name + " firstname: " + firstName + " password: " + password + " emailMasked: " + emailMasked + " hash " + hash);
     //On vérifie si cet adresse email est deja enregistrer dans la BDD
     userModel.isExist(email)
       .then(resultat => {
@@ -129,7 +129,7 @@ exports.login = (req, res, next) => {
               error: 'Adresse email et ou mot de passe incorrect !'
             });
           }
-          console.log(user);
+          //console.log(user);
           return res.status(200).json({
             userId: user.id,
             token: jwt.sign({
@@ -137,7 +137,7 @@ exports.login = (req, res, next) => {
             },
               // Clé d'encodage du token
               process.env.TOKEN,
-              
+
               // expiration au bout de 24h
               {
                 expiresIn: '24h'
@@ -158,18 +158,22 @@ exports.login = (req, res, next) => {
 
 /*-------------------------------------- GET USER -------------------------------------*/
 exports.getUser = (req, res, next) => {
-  userModel.findOneBy(req.body.id)
+  userModel.findOneById(req.body.id)
+    //on a notre promesse
     .then(user => {
       //on verifie si l'id du body est identique au req.userIdToken
       if (req.body.id === req.userIdToken) {
         //on appel la view du profile et lui passe l'user
-        createProfile(user);
+        res.status(200).json(user);
       }
+      //sinon
       else {
-        res.status(400).json({ message : "Votre id est introuvable"});
+        //on retourne un message d'erreur
+        res.status(400).json({ message: "Votre id est introuvable" });
       }
-        
+
     })
+    //erreur promesse
     .catch(error => {
       return res.status(401).json({
         message: error
@@ -179,101 +183,66 @@ exports.getUser = (req, res, next) => {
 
 /*------------------------------------UPDATE USER------------------------------------- */
 exports.modifyUser = (req, res, next) => {
-  //si on a un email
-  if (req.body.email) {
-    //on recherche le membre avec l'id
-    db.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, result) => {
-      //si il y a une erreur dans la requete
-      if (err) {
-        //on affiche un message
-        res.status(500).json({ message: "erreur 1" });
-      }
-      //sinon
-      else {
-        //si le result n'est pas undefined
-        if (result[0] != undefined) {
-          //on recherche un utilisateur avec l'email et l'id
-          db.query('SELECT * FROM user WHERE email = ? AND id != ?', [req.body.email, req.params.id], (err, result) => {
-            //si une erreur dans la requete
-            if (err) {
-              //on affiche un message
-              res.status(500).json({ message: "erreur 2" });
-            }
-            //sinon
-            else {
-              //si le result n'est pas undefined
-              if (result[0] != undefined) {
-                //on affiche un message
-                res.status(500).json({ message: "erreur 3" });
-              }
-              //sinon
-              else {
-                //on Update l'utilisateur
-                db.query('UPDATE user SET name = ?, firstname = ?, email = ?, password = ? WHERE id = ?', [req.body.name, req.body.firstname, req.body.email, req.body.password, req.params.id], (err, result) => {
-                  //si une erreur dans la requete
-                  if (err) {
-                    //on affiche un message
-                    res.status(500).json({ message: "erreur 4" });
-                  }
-                  //sinon 
-                  else {
-                    //on affiche un message pour confirmer la modification
-                    res.status(200).json({ message: "utilisateur modifier" });
-                  }
-                })
-              }
-            }
-          })
-        }
-        //sinon
-        else {
-          //on affiche un message
-          res.status(500).json({ message: "id utilisateur inconnu" });
-        }
-      }
-    })
+  //Récupération et sauvegarde dans une variable de l'userId
+  let user = req.userIdToken;
+  console.log(user);
+  //verification si userId = Sauce.userId (si l'utilisateur est propriètaire de la sauce)
+  let userObject = { ...req.body };
+
+
+  // Si la modification contient une image
+  userModel.findOneById({
+    _id: req.params.id
+  }).then((user) => {
+
+  }),
+
+    sauceObject = {
+      ...req.body
+    }
+
+  if (req.userIdToken === userObject.userId) {
+    userModel.updateOne(
+      // On applique les paramètre de sauceObject
+      {
+        _id: req.params.id
+      }, {
+      ...sauceObject,
+      _id: req.params.id
+    }
+    )
+      .then(() => res.status(200).json({ message: 'profil modifiée !' })
+      )
+      .catch((error) => res.status(400).json({ error: 'profil est introuvable' })
+      )
   }
-  //sinon
   else {
-    //on affiche un message
-    res.status(500).json({ message: "erreur 4" });
+    res.status(401).json({ error: "Vous ne disposez pas des droits pour modifier ce profil !" });
   }
 }
 
+
 /*------------------------------------DELETE USER------------------------------------- */
 exports.deleteUser = (req, res, next) => {
-  //on recupere l'utilisateur avec l'id
-  db.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, result) => {
-    //si une erreur dans la requete
-    if (err) {
-      //on affiche un message
-      res.status(500).json({ message: "erreur dans la requete " });
-    }
-    //sinon 
-    else {
-      //si le result n'est pas undefined
-      if (result[0] != undefined) {
-        //on supprime l'utilisateur avec l'id
-        db.query('DELETE FROM user WHERE id = ?', [req.params.id], (err, result) => {
-          //si une erreur dans la requete
-          if (err) {
-            //on affiche un message
-            res.status(500).json({ message: "erreur dans la requete" });
+      userModel.findOneBy(req.body.id)
+        //on a notre promesse
+        .then(user => {
+          //on verifie si l'id du body est identique au req.userIdToken
+          if (req.body.id === req.userIdToken) {
+            //on appel la view du profile et lui passe l'user
+            createProfile(user);
           }
           //sinon
           else {
-            //on affiche un message pour confirmer la suppression
-            res.status(200).json({ message: "suppression effectuer" });
+            //on retourne un message d'erreur
+            res.status(400).json({ message: "Votre id est introuvable" });
           }
+
         })
-      }
-      //sinon
-      else {
-        //on affiche un message 
-        res.status(400).json({ message: "id utilisateur introuvable" });
-      }
-
-    }
-  })
-
-};
+        //erreur promesse
+        .catch(error => {
+          return res.status(401).json({
+            message: error
+          });
+        });
+    };

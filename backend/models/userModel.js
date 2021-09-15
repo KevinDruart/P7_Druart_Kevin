@@ -50,3 +50,38 @@ exports.create = (name, firstName, emailMasked, email, hash) => {
         };
     });
 };
+
+
+exports.findOneById = (id) => {
+    const sql = 'SELECT * FROM user WHERE id = ?';
+    return new Promise((resolve, reject) => {
+        try {
+            db.query(sql, [id], (error, result, fields) => {
+                if (result === undefined || result === "") {
+                    reject('Votre id est introuvable ou essayer de vous reconnecter !');
+                } else {
+                    resolve(result[0]);
+                };
+            });
+        } catch (error) {
+            reject(error);
+        };
+    });
+};
+
+exports.updateOne = (name, firstName, emailMasked, email, hash) => {
+    const sql = 'UPDATE INTO user(name, firstname, emailMasked, email, password) VALUES(?,?,?,?,?)';
+    return new Promise((resolve, reject) => {
+        try {
+            db.query(sql, [name, firstName, emailMasked, email, hash], (error, result, fields) => {
+                if (result === undefined) {
+                    reject(`Impossible de modifier utilisateur.`);
+                } else {
+                    resolve(`utilisateur modifié`);
+                };
+            });
+        } catch (error) {
+            reject(error);
+        };
+    });
+};
