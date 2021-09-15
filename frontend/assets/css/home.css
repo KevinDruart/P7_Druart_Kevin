@@ -386,6 +386,10 @@
 main#posts_page {
   margin-top: 100px;
 }
+
+a.nav-link.px-2.link-dark {
+  padding: 0;
+}
   
   @media (max-width: 768px) {
     .sidebar {
