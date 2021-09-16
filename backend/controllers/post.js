@@ -11,59 +11,38 @@ const postModel = require('../models/postModel.js');
 const mysql = require('mysql');
 
 /*------------------------------------CREATE POST------------------------------------- */
-exports.createPost = (req, res, next) => {
-  //on recupere l'id de l'utilisateur
-  let userId = req.userIdToken;
-  //on recupere les donnees
-  //titre du post
-  let title = req.body.title;
-  let content = req.body.content;
-  let image = req.file;
-  //si on recupere un id
-  if (userId != null) {
-    //on recupere tout les posts
-    db.query('SELECT * FROM user WHERE id=? ', [userId], (err, result) => {
-      //si une erreur dans la requete
-      if (err) {
-        //on affiche un message
-        res.status(500).json({ message: "erreur dans la requete" });
+exports.addPost = (req, res, next) => {
+  let id = req.body.userId;
+  userModel.isExistId(id)
+    .then(resultat => {
+      if (resultat.nb = 0) {
+        return res.status(400).json({
+          error: "Vous devez etre connecter pour poster"
+        });
       }
-      //sinon
-      else {
-        if (result[0] != undefined) {
-          //on insert le post
-          db.query('INSERT INTO post(title, user_id, content, image) VALUES(?,?,?,?)', [title, userId, content, image],
-            (err, result) => {
-              //si une erreur dans la requete
-              if (err) {
-                //on affiche un message
-                res.status(500).json({ message: "erreur dans la requete" });
-              }
-              //sinon
-              else {
-                res.status(200).json({ message: "post ajouter" })
-              }
-            })
-        }
-        //sinon
-        else {
-          //on affiche un message
-          res.status(500).json({ message: "id utilisateur introuvable" });
-        }
-      }
+      postModel.createPost(userId, dateTime, title, message, image)
+        .then(resultat => {
+          return res.status(200).json({
+            message: resultat
+          });
+        })
+        .catch(error => {
+          return res.status(400).json({
+            message: error
+          });
+        });
     })
-  }
-  //sinon
-  else {
-    //on affiche un message 
-    res.status(400).json({ message: "vous devez etre connecter pour voir les posts" });
-  }
+    .catch(error => {
+      console.log(error);
+      return res.status(400).json({ error: "Une erreur est survenue." });
+    });
 };
+
 
 /*---------------------------------READ ALL POST--------------------------------- */
 exports.getAllPost = (req, res, next) => {
 
-  postModel.findPosts(req.body.id)
+  postModel.getPosts(req.body.id)
     //on a notre promesse
     .then(posts => {
       //on verifie si l'id du body est identique au req.userIdToken

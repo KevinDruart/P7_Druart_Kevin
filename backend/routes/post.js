@@ -11,7 +11,7 @@ const postCtrl = require('../controllers/post');
 //Get all posts
     router.get('/',  postCtrl.getAllPost);
 //Create post
-    router.post('/',  multer, postCtrl.createPost);
+    router.post('/',  multer, postCtrl.addPost);
 //Modify post
     router.put('/:id',  multer, postCtrl.modifyPost);
 //delete post

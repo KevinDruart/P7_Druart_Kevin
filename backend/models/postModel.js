@@ -1,5 +1,6 @@
 const db = require('../connect/dbConnect.js');
 
+//creer un post
 exports.createPost = (userId, dateTime, title, message, image) => {
     const sql = 'INSERT INTO post(user_id, time_post, title, content, image) VALUES(?,?,?,?,?)';
     return new Promise((resolve, reject) => {
@@ -17,6 +18,7 @@ exports.createPost = (userId, dateTime, title, message, image) => {
     });
 };
 
+//modifier un post
 exports.updatePost = (title, message, image) => {
     const sql = 'UPDATE INTO post( title, content, image) VALUES(?,?,?)';
     return new Promise((resolve, reject) => {
@@ -34,7 +36,8 @@ exports.updatePost = (title, message, image) => {
     });
 };
 
-exports.findPost = () => {
+//chercher les post
+exports.getPosts = () => {
     const sql = 'SELECT * FROM post';
     return new Promise((resolve, reject) => {
         try {

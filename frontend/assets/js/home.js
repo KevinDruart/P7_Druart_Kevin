@@ -7,12 +7,13 @@ const listePosts = () => {
   //appel de la fonction qui affiche le nombre de produit dans le panier header
   signout();
   if (token === null && userId === null) {
-    //on appel la view qui affiche un message d'erreur
+    //on appel la view qui affiche un message d'erreur 
     homePageError();
   }
   else {
 
     const messages = getRequest("http://localhost:3000/api/messages");
+    console.log(messages)
     messages
       //on a une promesse avec des donnees produits
       .then((messages) => {
