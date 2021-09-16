@@ -1,6 +1,39 @@
-/*----------------------------Creation de la vue des posts------------------------------ */
+/*------------------------------Création page home-------------------------------------- */
+const homePageError = () => {
+    let postsPage = document.getElementById('posts_page');
+    let errorContainer = document.getElementById('error-message');
+    let titleError = create('h1', 'class', 'title-error');
+    let messageError = create('p', 'class', 'text-error');
 
-const postsView = (post) => {
+    console.log("vous n'etes pas connecter");
+    //on desactive laffichage de la page
+    postsPage.style.display = "none";
+  
+  
+    //on active laffichage de la balise error
+    errorContainer.style.display = "block";
+    errorContainer.style.textAlign ="center";
+    //on creer le message qui sera passer dans la balise error
+    let titleError = create('h1', 'class', 'title-error');//titre
+    let messageError = create('p', 'class', 'text-error');//message
+    let buttonError = create ('button', 'onClick', "window.location.href='index.html'");//bouton redirection connexion
+  
+    //hierarchisation
+    errorContainer.appendChild(titleError);
+    errorContainer.appendChild(messageError);
+    errorContainer.appendChild(buttonError);
+  
+    //attribution données ou message
+    titleError.textContent = 'Espace reservé';
+    messageError.textContent ='Vous devez etre connecter pour accéder a cet page';
+    buttonError.textContent = 'Me connecter';
+
+}
+
+
+/*--------------------------Creation de la vue des posts---------------------------- */
+
+const postsView = (message) => {
     //on attrape l'element content-app ou doit etre injecter le code
     let contentApp = document.getElementById('post');
 

@@ -8,6 +8,21 @@ const create = (type, Qualified, nomType) => {
 }
 
 
+/*---------------------------------fonction SIGNOUT -----------------------------------*/
+
+const signout = () => {
+  let btnSignout = document.getElementById('signout');
+
+  btnSignout.addEventListener('click', (e) => {
+    e.preventDefault();
+    sessionStorage.clear();
+    alert("Vous êtes désormais déconnecter. A bientôt");
+    window.location.href='index.html';
+    
+  });
+}
+
+
 
 /*----------------------------------EFFETS ET DESIGN----------------------------------- */
 /****************************************************************************************/

@@ -1,10 +1,11 @@
-//requis
-
 // Récupération du module 'file system' de Node permettant de gérer les images
 const fs = require('fs');
 
 //connexion a la bdd
 const db = require('../connect/dbConnect.js');
+
+//import postModel
+const postModel = require('../models/postModel.js');
 
 //requete sql
 const mysql = require('mysql');
@@ -32,74 +33,17 @@ exports.createPost = (req, res, next) => {
         if (result[0] != undefined) {
           //on insert le post
           db.query('INSERT INTO post(title, user_id, content, image) VALUES(?,?,?,?)', [title, userId, content, image],
-          (err, result) => {
-            //si une erreur dans la requete
-            if (err) {
-              //on affiche un message
-              res.status(500).json({ message: "erreur dans la requete" });
-            }
-            //sinon
-            else {
-              res.status(200).json({ message: "post ajouter" })
-            }
-          })
-        }
-        //sinon
-        else {
-          //on affiche un message
-          res.status(500).json({ message: "id utilisateur introuvable" });
-        }
-      }
-    })
-  }
-  //sinon
-  else {
-    //on affiche un message 
-    res.status(400).json({ message: "vous devez etre connecter pour voir les posts" });
-  }
-};
-
-
-
-/*---------------------------------READ ALL POST--------------------------------- */
-exports.getAllPost = (req, res, next) => {
-  //on recupere l'id de l'utilisateur
-  let userId = req.userIdToken;
-  //si on recupere un id
-  if (userId != null) {
-    //on recupere tout les posts
-    db.query('SELECT * FROM user WHERE id=? ', [userId], (err, result) => {
-      //si une erreur dans la requete
-      if (err) {
-        //on affiche un message
-        res.status(500).json({ message: "erreur dans la requete" });
-      }
-      //sinon
-      else {
-        if (result[0] != undefined) {
-          //on recupere tout les posts
-          db.query('SELECT * FROM post ', (err, result) => {
-            //si une erreur dans la requete
-            if (err) {
-              //on affiche un message
-              res.status(500).json({ message: "erreur dans la requete" });
-            }
-            //sinon
-            else {
-              //si le result n'est pas undefined
-              if (result[0] != undefined) {
-                //on affiche un message d'erreur
-                console.log("voici les posts");
-                //on renvoie le result
-                res.status(200).json({ result });
+            (err, result) => {
+              //si une erreur dans la requete
+              if (err) {
+                //on affiche un message
+                res.status(500).json({ message: "erreur dans la requete" });
               }
               //sinon
               else {
-                //on affiche un message
-                res.status(500).json({ message: "aucun post" })
+                res.status(200).json({ message: "post ajouter" })
               }
-            }
-          })
+            })
         }
         //sinon
         else {
@@ -112,10 +56,36 @@ exports.getAllPost = (req, res, next) => {
   //sinon
   else {
     //on affiche un message 
-    console.log("erreur utilisateur pas connecter");
     res.status(400).json({ message: "vous devez etre connecter pour voir les posts" });
   }
 };
+
+/*---------------------------------READ ALL POST--------------------------------- */
+exports.getAllPost = (req, res, next) => {
+
+  postModel.findPosts(req.body.id)
+    //on a notre promesse
+    .then(posts => {
+      //on verifie si l'id du body est identique au req.userIdToken
+      if (req.body.id === req.userIdToken) {
+        //
+        res.status(200).json(posts);
+      }
+      //sinon
+      else {
+        //on retourne un message d'erreur
+        res.status(400).json({ message: "Votre id est introuvable" });
+      }
+
+    })
+    //erreur promesse
+    .catch(error => {
+      return res.status(401).json({
+        message: error
+      });
+    });
+
+}
 
 
 

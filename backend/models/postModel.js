@@ -33,3 +33,20 @@ exports.updatePost = (title, message, image) => {
         };
     });
 };
+
+exports.findPost = () => {
+    const sql = 'SELECT * FROM post';
+    return new Promise((resolve, reject) => {
+        try {
+            db.query(sql, (error, result, fields) => {
+                if (result === undefined) {
+                    reject(`Affichage des posts impossible.`);
+                } else {
+                    resolve(`voici les posts`);
+                };
+            });
+        } catch (error) {
+            reject(error);
+        };
+    });
+};
