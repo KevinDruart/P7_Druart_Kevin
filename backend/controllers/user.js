@@ -13,38 +13,6 @@ const maskData = require('../node_modules/maskdata/index');
 
 /*-----------------------------------------SIGNUP--------------------------------------------*/
 // INSCRIPTION D'UN UTILISATEUR avec hashage MDP (BCRYPT) et maskage email(maskdata)
-
-// ###################################################################
-// ###################################################################
-// ###################################################################
-// ###################################################################
-// ===================> FAIRE UN MIDDLEWARE de la function ci-dessous
-// ###################################################################
-// ###################################################################
-// ###################################################################
-// ###################################################################
-/*const testEmail = (email, res) => {
-  //regex email 
-  //chiffre lettre - _ ç  (autorisé)@groupomania.fr
-  //exemples attendu: 
-  //contact95@groupomania.fr
-  //jean-françois@groupomania.fr
-  let regexMail = /^[a-z0-9ç_-]+@groupomania\.fr$/;
-
-  //on test l'adresse email
-  if (!regexMail.test(email)) {
-    return res.status(400).json({
-      message: "Le format d'email n'est pas correcte, il doit obligatoirement s'agir de votre email @groupomania.fr"
-    });
-  }
-}*/
-// ###################################################################
-// ###################################################################
-// ###################################################################
-// ###################################################################
-// ###################################################################
-// ###################################################################
-
 // Promise
 exports.signup = (req, res, next) => {
   //configuration du masquage email
@@ -60,10 +28,6 @@ exports.signup = (req, res, next) => {
 
   //on recupére l'email présent dans le body
   let email = req.body.email;
-
-
-  //si l'email n'est pas une adresse email professionel
-  //testEmail(email, res);
 
   //on récupére le reste des données dans le body
   //nom
@@ -81,7 +45,7 @@ exports.signup = (req, res, next) => {
   // On appelle la méthode hash de bcrypt
   bcrypt.hash(password, saltRounds, (error, hash) => {
     //Verification récupération des données
-    //console.log("email: " + email + " name: " + name + " firstname: " + firstName + " password: " + password + " emailMasked: " + emailMasked + " hash " + hash);
+    
     //On vérifie si cet adresse email est deja enregistrer dans la BDD
     userModel.isExist(email)
       .then(resultat => {
@@ -158,7 +122,7 @@ exports.login = (req, res, next) => {
 
 /*-------------------------------------- GET USER -------------------------------------*/
 exports.getUser = (req, res, next) => {
-  
+
   userModel.findOneById(req.body.id)
     //on a notre promesse
     .then(user => {
